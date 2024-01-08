@@ -34,12 +34,12 @@ class PokemonEmulatorGUI:
 
 
     def run_emulator(self):
-        self.pyboy = PyBoy("C:/Users/valie/OneDrive/Desktop/SwitchClips/Programmieren/Python/PiPlaysRed/PokemonRed.gb")
+        self.pyboy = PyBoy("./PokemonRed.gb")
         self.pyboy.set_emulation_speed(5.0)
         self.emulation_loop()
 
     def emulation_loop(self):
-        with open("C:/Users/valie/OneDrive/Desktop/SwitchClips/Programmieren/Python/PiPlaysRed/pi.txt", "r") as file:
+        with open("./pi.txt", "r") as file:
             content = file.read()
         counter = 0
         while True:
