@@ -54,8 +54,6 @@ class PokemonEmulatorGUI:
                 self.pyboy.tick()
                 
                 
-
-
     """ def quit_emulator(self):
         self.pyboy.stop()
         self.destroy() """
