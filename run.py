@@ -1,9 +1,8 @@
-import tkinter as tk
 from pyboy import PyBoy, WindowEvent
+import time
 
-class PokemonEmulatorGUI:
-    def __init__(self, master):
-        self.master = master
+class PokemonEmulatorBackground:
+    def __init__(self):
         self.pressAction = [
             WindowEvent.PRESS_BUTTON_A,     # 0
             WindowEvent.PRESS_BUTTON_B,     # 1
@@ -29,9 +28,6 @@ class PokemonEmulatorGUI:
             WindowEvent.RELEASE_BUTTON_B,     # 9
         ]
         self.run_emulator()
-        self.pack()
-        self.pyboy = None
-
 
     def run_emulator(self):
         self.pyboy = PyBoy("./PokemonRed.gb")
@@ -42,23 +38,25 @@ class PokemonEmulatorGUI:
         with open("./pi.txt", "r") as file:
             content = file.read()
         counter = 0
+        screen = 0
+        lasttime = time.time()
         while True:
+            if ((time.time() - lasttime) % 60 > 5):
+                screen += 1
+                lasttime = time.time()
+            if screen == 1:
+                screen = 0
+                self.pyboy.screen_image().save("./screenshot.jpg")
             currentDigit = int(content[counter])
             counter += 1
 
             self.pyboy.send_input(self.pressAction[currentDigit])
 
-            for i in range (24):
+            for i in range(24):
                 if i == 8:
                     self.pyboy.send_input(self.releaseAction[currentDigit])
                 self.pyboy.tick()
-                
-                
-    """ def quit_emulator(self):
-        self.pyboy.stop()
-        self.destroy() """
 
 
-root = tk.Tk()
-gui = PokemonEmulatorGUI(root)
-root.mainloop()
+if __name__ == "__main__":
+    emulator = PokemonEmulatorBackground()
