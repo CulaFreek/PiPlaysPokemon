@@ -1,2 +1,2 @@
 ﻿# PiPlaysPokemon
-Work in progress
+Running
